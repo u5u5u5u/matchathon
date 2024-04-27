@@ -3,11 +3,18 @@ import Image from "next/image";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import { db } from "../../lib/firebase/firebase";
-import { updateDoc, doc, addDoc, collection } from "firebase/firestore";
+import {
+  updateDoc,
+  addDoc,
+  deleteDoc,
+  collection,
+  doc,
+} from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
+// データベースにドキュメントを追加
 const addDataToFirestore = async (
   name: string,
   email: string,
@@ -27,6 +34,7 @@ const addDataToFirestore = async (
   }
 };
 
+// データベースのドキュメントを更新
 const updateDataInFirestore = async (id: string, newData: any) => {
   try {
     await updateDoc(doc(db, "messages", id), newData);
@@ -34,6 +42,18 @@ const updateDataInFirestore = async (id: string, newData: any) => {
     return true;
   } catch (error) {
     console.error("Error updating document: ", error);
+    return false;
+  }
+};
+
+// データベースのドキュメントを削除
+const deleteDataFromFirestore = async (id: string) => {
+  try {
+    await deleteDoc(doc(db, "messages", id));
+    console.log("Document deleted successfully");
+    return true;
+  } catch (error) {
+    console.error("Error deleting document: ", error);
     return false;
   }
 };
@@ -63,6 +83,16 @@ export default function Home() {
     });
     if (updated) {
       console.log("Data updated successfully");
+      setName("");
+      setEmail("");
+      setMessage("");
+    }
+  };
+
+  const deleteData = async () => {
+    const deleted = await deleteDataFromFirestore("CwOJRzcnGgnso0QT4auU");
+    if (deleted) {
+      console.log("Data deleted successfully");
     }
   };
 
@@ -140,6 +170,7 @@ export default function Home() {
             <button type="submit">Update</button>
           </div>
         </form>
+        <button onClick={deleteData}>Delete</button>
       </main>
     </>
   );
