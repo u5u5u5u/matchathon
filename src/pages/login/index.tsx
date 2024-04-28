@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { initializeApp } from "@firebase/app";
 import {
   getAuth,
   GoogleAuthProvider,
@@ -10,15 +9,15 @@ import {
   signOut,
   Auth,
 } from "@firebase/auth";
-import { firebaseConfig } from "../../../lib/firebase/firebase";
+import { auth } from "../../../lib/firebase/firebase";
 
 const useAuth = (auth: Auth) => {
   const [state, setState] = useState<
-    "idel" | "progress" | "logined" | "logouted" | "error"
+    "idel" | "progress" | "login" | "logout" | "error"
   >("idel");
   const [error, setError] = useState<unknown>("");
   const [credential, setCredential] = useState<UserCredential>();
-  const [logined, setLogined] = useState<boolean>(false);
+  const [login, setLogin] = useState<boolean>(false);
 
   const dispatch = useCallback(
     (
@@ -26,93 +25,103 @@ const useAuth = (auth: Auth) => {
         | { type: "login"; payload?: { token: string } }
         | { type: "logout" }
     ) => {
-      setError("");
+      setError(""); // エラーをリセット
+
+      // アクションに応じて処理を分岐
       switch (action.type) {
+        // ログイン
         case "login":
-          setState("progress");
-          const token = action.payload?.token;
+          setState("progress"); // ログイン中
+          const token = action.payload?.token; // トークンがあればトークンでログイン
+          // トークンがあればトークンでログイン、なければポップアップでログイン
           if (token) {
+            // トークンでログイン
             signInWithCredential(auth, GoogleAuthProvider.credential(token))
               .then((result) => {
-                setCredential(result);
-                setState("logined");
-                setLogined(true);
+                setCredential(result); // ユーザー情報をセット
+                setState("login"); // ログイン完了
+                setLogin(true); // ログイン状態をセット
               })
               .catch((e) => {
-                setError(e);
-                setState("error");
-                setLogined(false);
+                setError(e); // エラーをセット
+                setState("error"); // エラー状態
+                setLogin(false); // ログイン状態をセット
               });
           } else {
+            // ポップアップでログイン
             signInWithPopup(auth, provider)
               .then((result) => {
-                setCredential(result);
-                setState("logined");
-                setLogined(true);
+                setCredential(result); // ユーザー情報をセット
+                setState("login"); // ログイン完了
+                setLogin(true); // ログイン状態をセット
               })
               .catch((e) => {
-                setError(e);
-                setState("error");
-                setLogined(false);
+                setError(e); // エラーをセット
+                setState("error"); // エラー状態
+                setLogin(false); // ログイン状態をセット
               });
           }
           break;
+        // ログアウト
         case "logout":
-          setState("progress");
+          setState("progress"); // ログアウト中
+          // ログアウト処理
           signOut(auth)
             .then(() => {
-              setCredential(undefined);
-              setState("logouted");
+              setCredential(undefined); // ユーザー情報をリセット
+              setState("logout"); // ログアウト完了
             })
             .catch((e) => {
-              setError(e);
-              setState("error");
+              setError(e); // エラーをセット
+              setState("error"); // エラー状態
             });
           break;
       }
     },
-    [auth]
+    [auth] // authが変更されたら再生成
   );
-  return { state, error, credential, dispatch, logined };
+  return { state, error, credential, dispatch, login }; // カスタムフックの返り値
 };
 
-const auth = getAuth(initializeApp(firebaseConfig));
-
-const provider = new GoogleAuthProvider();
+const provider = new GoogleAuthProvider(); // Google認証プロバイダー
 
 const Page = () => {
-  const router = useRouter();
-  const { state, dispatch, credential, error, logined } = useAuth(auth);
-  const [JSvalid, setJSvalid] = useState<boolean>(false);
+  const router = useRouter(); // ルーター
+  const { state, error, credential, dispatch, login } = useAuth(auth); // カスタムフック
+  const [JSvalid, setJSvalid] = useState<boolean>(false); // JavaScript有効化フラグ
 
+  // ログイン状態を保持
   useEffect(() => {
-    const token = sessionStorage.getItem("token");
+    const token = sessionStorage.getItem("token"); // セッションストレージからトークンを取得
     if (token) {
-      dispatch({ type: "login", payload: { token } });
+      dispatch({ type: "login", payload: { token } }); // トークンでログイン
     }
   }, [dispatch]);
 
+  // ログイン状態をセッションストレージに保存
   useEffect(() => {
+    // ユーザー情報があればトークンをセッションストレージに保存
     if (credential) {
       const token =
-        GoogleAuthProvider.credentialFromResult(credential)?.idToken;
-      token && sessionStorage.setItem("token", token);
+        GoogleAuthProvider.credentialFromResult(credential)?.idToken; // トークンを取得
+      token && sessionStorage.setItem("token", token); // トークンをセッションストレージに保存
     } else {
-      sessionStorage.removeItem("token");
+      sessionStorage.removeItem("token"); // ユーザー情報がなければセッションストレージからトークンを削除
     }
   }, [credential]);
 
-  const handleLogin = () => dispatch({ type: "login" });
-  const handleLogout = () => dispatch({ type: "logout" });
+  const handleLogin = () => dispatch({ type: "login" }); // ログイン処理
+  const handleLogout = () => dispatch({ type: "logout" }); // ログアウト処理
 
+  // ログイン状態が変更されたらページ遷移
   useEffect(() => {
-    if (logined) {
-      router.push(`/home`);
+    if (login) {
+      router.push(`/home`); // ログイン状態ならhomeページに遷移
     }
-  }, [logined]);
+  }, [login]);
 
   useEffect(() => {
-    setJSvalid(true);
+    setJSvalid(true); // JavaScript有効化
   }, []);
 
   if (JSvalid) {
@@ -124,7 +133,7 @@ const Page = () => {
             <ul>
               <li>UserName: {credential?.user.displayName}</li>
               <li>State: {state}</li>
-              <li>Error: {String(error)}</li>
+              {String(error) && <li>Error: {String(error)}</li>}
             </ul>
             <button onClick={handleLogout}>logOut</button>
           </div>
