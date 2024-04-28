@@ -6,6 +6,8 @@ import { db } from "../../lib/firebase/firebase";
 import {
   updateDoc,
   addDoc,
+  getDoc,
+  getDocs,
   deleteDoc,
   collection,
   doc,
@@ -21,7 +23,7 @@ const addDataToFirestore = async (
   message: string
 ) => {
   try {
-    const docRef = await addDoc(collection(db, "messages"), {
+    const docRef = await addDoc(collection(db, "users"), {
       name: name,
       email: email,
       message: message,
@@ -37,7 +39,7 @@ const addDataToFirestore = async (
 // データベースのドキュメントを更新
 const updateDataInFirestore = async (id: string, newData: any) => {
   try {
-    await updateDoc(doc(db, "messages", id), newData);
+    await updateDoc(doc(db, "users", id), newData);
     console.log("Document updated successfully");
     return true;
   } catch (error) {
@@ -49,13 +51,36 @@ const updateDataInFirestore = async (id: string, newData: any) => {
 // データベースのドキュメントを削除
 const deleteDataFromFirestore = async (id: string) => {
   try {
-    await deleteDoc(doc(db, "messages", id));
+    await deleteDoc(doc(db, "users", id));
     console.log("Document deleted successfully");
     return true;
   } catch (error) {
     console.error("Error deleting document: ", error);
     return false;
   }
+};
+
+// データベースのドキュメントを取得
+const getDataOnlyFromFirestore = async () => {
+  try {
+    const docRef = doc(db, "users", "G26NDVES00hSA19TMNojHfmU4Rw2");
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      console.log("Document data:", docSnap.data());
+    } else {
+      console.log("No such document!");
+    }
+  } catch (error) {
+    console.error("Error getting document:", error);
+  }
+};
+
+// データベースのドキュメントを全て取得
+const getAllDataFromFirestore = async () => {
+  const querySnapshot = await getDocs(collection(db, "users"));
+  querySnapshot.forEach((doc) => {
+    console.log(doc.id, " => ", doc.data());
+  });
 };
 
 export default function Home() {
@@ -76,11 +101,14 @@ export default function Home() {
 
   const updateData = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const updated = await updateDataInFirestore("ADBIuHiTImu7GLZPgPnx", {
-      name: name,
-      email: email,
-      message: message,
-    });
+    const updated = await updateDataInFirestore(
+      "G26NDVES00hSA19TMNojHfmU4Rw2",
+      {
+        name: name,
+        email: email,
+        message: message,
+      }
+    );
     if (updated) {
       console.log("Data updated successfully");
       setName("");
@@ -94,6 +122,14 @@ export default function Home() {
     if (deleted) {
       console.log("Data deleted successfully");
     }
+  };
+
+  const getDataOnly = async () => {
+    await getDataOnlyFromFirestore();
+  };
+
+  const getDataAll = async () => {
+    await getAllDataFromFirestore();
   };
 
   return (
@@ -171,6 +207,8 @@ export default function Home() {
           </div>
         </form>
         <button onClick={deleteData}>Delete</button>
+        <button onClick={getDataOnly}>Get Only</button>
+        <button onClick={getDataAll}>Get All</button>
       </main>
     </>
   );
