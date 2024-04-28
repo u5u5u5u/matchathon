@@ -1,14 +1,11 @@
 import Head from "next/head";
 import { useState } from "react";
-import { useRouter } from "next/router";
 import MatchaDish from "@/components/bodies/MatchaDish";
 import MyPage from "@/components/bodies/MyPage";
 import MatchaDishRegistration from "@/components/bodies/MatchaDishRegistration";
 import Map from "@/components/bodies/Map";
 
 export default function Home() {
-  const router = useRouter();
-  const { pid } = router.query;
   const [selected, setSelected] = useState("抹茶料理一覧");
   const handleNavClick = (newValue: string) => {
     setSelected(newValue);
