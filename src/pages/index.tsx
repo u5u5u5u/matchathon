@@ -1,10 +1,36 @@
 import Head from "next/head";
-import { Inter } from "next/font/google";
-import styles from "@/styles/Home.module.css";
-
-const inter = Inter({ subsets: ["latin"] });
+import { useState } from "react";
+import { useRouter } from "next/router";
+import MatchaDish from "@/components/bodies/MatchaDish";
+import MyPage from "@/components/bodies/MyPage";
+import MatchaDishRegistration from "@/components/bodies/MatchaDishRegistration";
+import Map from "@/components/bodies/Map";
 
 export default function Home() {
+  const router = useRouter();
+  const { pid } = router.query;
+  const [selected, setSelected] = useState("抹茶料理一覧");
+  const handleNavClick = (newValue: string) => {
+    setSelected(newValue);
+  };
+  /*
+
+ホームページ(home)
+├─抹茶料理一覧ページ(MatchaDish)
+├─マイページ(MyPage)
+│ └─プロフィール編集ページ(ProfileEdit)
+├─抹茶料理登録ページ(MatchaDishRegistration)
+├─地図(Map)
+└─()
+
+  */
+  const contents: { [key: string]: JSX.Element } = {
+    抹茶料理一覧: <MatchaDish />,
+    マイページ: <MyPage />,
+    抹茶料理登録: <MatchaDishRegistration />,
+    地図: <Map />,
+  };
+
   return (
     <>
       <Head>
@@ -13,7 +39,23 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main></main>
+      <header>
+        <nav>
+          <ul>
+            {Object.entries(contents).map(([name]) => {
+              const flag = !!name.match(selected);
+              return (
+                <div key={name} onClick={(_) => handleNavClick(name)}>
+                  <li>
+                    <span>{name}</span>
+                  </li>
+                </div>
+              );
+            })}
+          </ul>
+        </nav>
+      </header>
+      <main>{contents[selected]}</main>
     </>
   );
 }
