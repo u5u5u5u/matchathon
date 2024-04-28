@@ -6,9 +6,10 @@ interface User {
 
 // 抹茶料理のデータ型定義
 interface MatchaDish {
-  name: string; // 抹茶料理名
+  dishName: string; // 抹茶料理名
   genre: "スイーツ" | "ドリンク" | "フード" | "その他"; // ジャンル
-  store: {
+  date: string; // 日付
+  shop: {
     name: string; // 店舗名
     address: string; // 店舗住所
     location: {
