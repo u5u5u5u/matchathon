@@ -4,6 +4,7 @@ import MatchaDish from "@/components/bodies/MatchaDish";
 import MyPage from "@/components/bodies/MyPage";
 import MatchaDishRegistration from "@/components/bodies/MatchaDishRegistration";
 import Map from "@/components/bodies/Map";
+import BottomBarIcon from "@/components/uiComponents/Buttons/BottomBarIcon";
 
 export default function Home() {
   const [selected, setSelected] = useState("抹茶料理一覧");
@@ -53,6 +54,11 @@ export default function Home() {
         </nav>
       </header>
       <main>{contents[selected]}</main>
+      <footer>
+        <BottomBarIcon onClick={() => handleNavClick("抹茶料理一覧")}>
+          抹茶料理一覧
+        </BottomBarIcon>
+      </footer>
     </>
   );
 }
