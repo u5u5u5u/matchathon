@@ -133,7 +133,7 @@ const Page = () => {
             <ul>
               <li>UserName: {credential?.user.displayName}</li>
               <li>State: {state}</li>
-              <li>Error: {String(error)}</li>
+              {String(error) && <li>Error: {String(error)}</li>}
             </ul>
             <button onClick={handleLogout}>logOut</button>
           </div>
