@@ -11,6 +11,9 @@ import {
   deleteDoc,
   collection,
   doc,
+  query,
+  orderBy,
+  limit,
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 
@@ -83,6 +86,15 @@ const getAllDataFromFirestore = async () => {
   });
 };
 
+// データベースのドキュメントを名前順で並び替え3つ取得
+const getDataOrderByFromFirestore = async () => {
+  const q = query(collection(db, "users"), orderBy("name"), limit(3));
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    console.log(doc.id, " => ", doc.data());
+  });
+};
+
 export default function Home() {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -130,6 +142,10 @@ export default function Home() {
 
   const getDataAll = async () => {
     await getAllDataFromFirestore();
+  };
+
+  const getDataOrderBy = async () => {
+    await getDataOrderByFromFirestore();
   };
 
   return (
@@ -209,6 +225,7 @@ export default function Home() {
         <button onClick={deleteData}>Delete</button>
         <button onClick={getDataOnly}>Get Only</button>
         <button onClick={getDataAll}>Get All</button>
+        <button onClick={getDataOrderBy}>Get Order By</button>
       </main>
     </>
   );
