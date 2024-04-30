@@ -4,6 +4,12 @@ import MatchaDish from "@/components/bodies/MatchaDish";
 import MyPage from "@/components/bodies/MyPage";
 import MatchaDishRegistration from "@/components/bodies/MatchaDishRegistration";
 import Map from "@/components/bodies/Map";
+import Stack from "@mui/material/Stack";
+import BottomBarAddIcon from "@/components/uiComponents/Buttons/BottomBarIcons/AddIcon";
+import BottomBarProfileIcon from "@/components/uiComponents/Buttons/BottomBarIcons/ProfileIcon";
+import BottomBarMapIcon from "@/components/uiComponents/Buttons/BottomBarIcons/MapIcon";
+import BottomBarMatchaIcon from "@/components/uiComponents/Buttons/BottomBarIcons/MatchaIcon";
+import CommonButton from "@/components/uiComponents/Buttons/CommonButton";
 
 export default function Home() {
   const [selected, setSelected] = useState("抹茶料理一覧");
@@ -28,6 +34,13 @@ export default function Home() {
     地図: <Map />,
   };
 
+  const icons: { [key: string]: JSX.Element } = {
+    抹茶料理一覧: <BottomBarMatchaIcon />,
+    マイページ: <BottomBarProfileIcon />,
+    抹茶料理登録: <BottomBarAddIcon />,
+    地図: <BottomBarMapIcon />,
+  };
+
   return (
     <>
       <Head>
@@ -36,23 +49,25 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <header>
+      <header></header>
+      <main>
+        {contents[selected]}
+        <CommonButton text={"ログイン"} />
+      </main>
+      <footer>
         <nav>
-          <ul>
+          <Stack direction="row" spacing={5} justifyContent="space-evenly">
             {Object.entries(contents).map(([name]) => {
               const flag = !!name.match(selected);
               return (
                 <div key={name} onClick={(_) => handleNavClick(name)}>
-                  <li>
-                    <span>{name}</span>
-                  </li>
+                  {icons[name]}
                 </div>
               );
             })}
-          </ul>
+          </Stack>
         </nav>
-      </header>
-      <main>{contents[selected]}</main>
+      </footer>
     </>
   );
 }

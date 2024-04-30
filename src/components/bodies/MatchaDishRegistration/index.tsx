@@ -3,7 +3,7 @@ import React from "react";
 const MatchaDishRegistration: React.FC = () => {
   return (
     <>
-      <h1>抹茶料理登録</h1>
+      <h1>登録</h1>
     </>
   );
 };
