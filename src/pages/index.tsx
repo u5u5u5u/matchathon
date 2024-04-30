@@ -9,6 +9,7 @@ import BottomBarAddIcon from "@/components/uiComponents/Buttons/BottomBarIcons/A
 import BottomBarProfileIcon from "@/components/uiComponents/Buttons/BottomBarIcons/ProfileIcon";
 import BottomBarMapIcon from "@/components/uiComponents/Buttons/BottomBarIcons/MapIcon";
 import BottomBarMatchaIcon from "@/components/uiComponents/Buttons/BottomBarIcons/MatchaIcon";
+import CommonButton from "@/components/uiComponents/Buttons/CommonButton";
 
 export default function Home() {
   const [selected, setSelected] = useState("抹茶料理一覧");
@@ -34,16 +35,10 @@ export default function Home() {
   };
 
   const icons: { [key: string]: JSX.Element } = {
-    抹茶料理一覧: (
-      <BottomBarMatchaIcon onClick={() => handleNavClick("抹茶料理一覧")} />
-    ),
-    マイページ: (
-      <BottomBarProfileIcon onClick={() => handleNavClick("マイページ")} />
-    ),
-    抹茶料理登録: (
-      <BottomBarAddIcon onClick={() => handleNavClick("抹茶料理登録")} />
-    ),
-    地図: <BottomBarMapIcon onClick={() => handleNavClick("地図")} />,
+    抹茶料理一覧: <BottomBarMatchaIcon />,
+    マイページ: <BottomBarProfileIcon />,
+    抹茶料理登録: <BottomBarAddIcon />,
+    地図: <BottomBarMapIcon />,
   };
 
   return (
@@ -55,7 +50,10 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <header></header>
-      <main>{contents[selected]}</main>
+      <main>
+        {contents[selected]}
+        <CommonButton text={"ログイン"} />
+      </main>
       <footer>
         <nav>
           <Stack direction="row" spacing={5} justifyContent="space-evenly">

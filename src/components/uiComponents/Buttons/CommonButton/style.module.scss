@@ -1,0 +1,14 @@
+@import "../../../../styles/globals.module.scss";
+
+.button {
+  display: inline-block;
+  text-align: center;
+  color: $MainBlack;
+  font-size: 1rem;
+  font-weight: 700;
+  background: $MainBrown;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
