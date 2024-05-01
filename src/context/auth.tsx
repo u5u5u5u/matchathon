@@ -14,7 +14,6 @@ type UserContextType = User | null | undefined;
 
 const AuthContext = createContext<UserContextType>(undefined);
 
-// 以下を追加
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<UserContextType>();
 
