@@ -1,44 +1,30 @@
 import Head from "next/head";
+import { useAuth } from "@/context/auth";
+import { login, logout } from "@/lib/auth";
 import { useState } from "react";
-import MatchaDish from "@/components/bodies/MatchaDish";
-import MyPage from "@/components/bodies/MyPage";
-import MatchaDishRegistration from "@/components/bodies/MatchaDishRegistration";
-import Map from "@/components/bodies/Map";
-import Stack from "@mui/material/Stack";
-import BottomBarAddIcon from "@/components/uiComponents/Buttons/BottomBarIcons/AddIcon";
-import BottomBarProfileIcon from "@/components/uiComponents/Buttons/BottomBarIcons/ProfileIcon";
-import BottomBarMapIcon from "@/components/uiComponents/Buttons/BottomBarIcons/MapIcon";
-import BottomBarMatchaIcon from "@/components/uiComponents/Buttons/BottomBarIcons/MatchaIcon";
+import { useRouter } from "next/router"; // Next.js のルーターをインポート
 import CommonButton from "@/components/uiComponents/Buttons/CommonButton";
 
 export default function Home() {
-  const [selected, setSelected] = useState("抹茶料理一覧");
-  const handleNavClick = (newValue: string) => {
-    setSelected(newValue);
-  };
-  /*
+  const user = useAuth();
+  const [waiting, setWaiting] = useState<boolean>(false);
+  const router = useRouter(); // Next.js のルーターを使用
 
-ホームページ(home)
-├─抹茶料理一覧ページ(MatchaDish)
-├─マイページ(MyPage)
-│ └─プロフィール編集ページ(ProfileEdit)
-├─抹茶料理登録ページ(MatchaDishRegistration)
-├─地図(Map)
-└─()
+  const signIn = () => {
+    setWaiting(true);
 
-  */
-  const contents: { [key: string]: JSX.Element } = {
-    抹茶料理一覧: <MatchaDish />,
-    マイページ: <MyPage />,
-    抹茶料理登録: <MatchaDishRegistration />,
-    地図: <Map />,
-  };
-
-  const icons: { [key: string]: JSX.Element } = {
-    抹茶料理一覧: <BottomBarMatchaIcon />,
-    マイページ: <BottomBarProfileIcon />,
-    抹茶料理登録: <BottomBarAddIcon />,
-    地図: <BottomBarMapIcon />,
+    login()
+      .then(() => {
+        // ログイン成功時に/homeにリダイレクト
+        router.push("/home");
+        console.log("ログイン成功");
+      })
+      .catch((error) => {
+        console.error(error?.code);
+      })
+      .finally(() => {
+        setWaiting(false);
+      });
   };
 
   return (
@@ -49,25 +35,11 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <header></header>
-      <main>
-        {contents[selected]}
-        <CommonButton text={"ログイン"} />
-      </main>
-      <footer>
-        <nav>
-          <Stack direction="row" spacing={5} justifyContent="space-evenly">
-            {Object.entries(contents).map(([name]) => {
-              const flag = !!name.match(selected);
-              return (
-                <div key={name} onClick={(_) => handleNavClick(name)}>
-                  {icons[name]}
-                </div>
-              );
-            })}
-          </Stack>
-        </nav>
-      </footer>
+
+      {user === null && !waiting && (
+        <CommonButton text="ログイン" onClick={signIn} />
+      )}
+      {user && <CommonButton text="ログアウト" onClick={logout} />}
     </>
   );
 }

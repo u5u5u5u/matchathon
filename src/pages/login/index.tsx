@@ -9,7 +9,7 @@ import {
   signOut,
   Auth,
 } from "@firebase/auth";
-import { auth } from "../../../lib/firebase/firebase";
+import { auth } from "../../lib/firebase";
 
 const useAuth = (auth: Auth) => {
   const [state, setState] = useState<

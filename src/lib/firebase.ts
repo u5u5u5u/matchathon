@@ -1,6 +1,6 @@
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+import { initializeApp, getApps } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 import {
   FIREBASE_API_KEY,
   FIREBASE_AUTH_DOMAIN,
@@ -10,7 +10,6 @@ import {
   FIREBASE_APP_ID,
   FIREBASE_MEASUREMENT_ID,
 } from "@/constant/env";
-import { getAuth } from "firebase/auth";
 
 export const firebaseConfig = {
   apiKey: FIREBASE_API_KEY,
@@ -22,8 +21,9 @@ export const firebaseConfig = {
   measurementId: FIREBASE_MEASUREMENT_ID,
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+if (!getApps()?.length) {
+  initializeApp(firebaseConfig);
+}
 
-export { auth, db };
+export const auth = getAuth();
+export const db = getFirestore();
