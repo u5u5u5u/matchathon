@@ -11,6 +11,7 @@ import BottomBarProfileIcon from "@/components/uiComponents/Buttons/BottomBarIco
 import BottomBarMapIcon from "@/components/uiComponents/Buttons/BottomBarIcons/MapIcon";
 import BottomBarMatchaIcon from "@/components/uiComponents/Buttons/BottomBarIcons/MatchaIcon";
 import CommonButton from "@/components/uiComponents/Buttons/CommonButton";
+import BackButton from "@/components/uiComponents/Buttons/BackButton";
 import styles from "./style.module.scss";
 
 export default function Top() {
@@ -60,6 +61,7 @@ export default function Top() {
     <div className={styles.container}>
       <div className={styles.inner}>
         <header>
+          <BackButton />
           <h1 className={styles.title}>{selected}</h1>
         </header>
         <main>
