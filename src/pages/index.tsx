@@ -1,13 +1,14 @@
 import Head from "next/head";
 import { useAuth } from "@/context/auth";
-import { login, logout } from "@/lib/auth";
+import { login } from "@/lib/auth";
 import { useState } from "react";
 import { useRouter } from "next/router"; // Next.js のルーターをインポート
 import CommonButton from "@/components/uiComponents/Buttons/CommonButton";
+import styles from "@/styles/style.module.scss";
 
 export default function Home() {
   const user = useAuth();
-  const [waiting, setWaiting] = useState<boolean>(false);
+  const [waiting, setWaiting] = useState<boolean>(false); // ログイン中かどうかの状態を管理
   const router = useRouter(); // Next.js のルーターを使用
 
   const signIn = () => {
@@ -35,11 +36,14 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      {user === null && !waiting && (
-        <CommonButton text="ログイン" onClick={signIn} />
-      )}
-      {user && <CommonButton text="ログアウト" onClick={logout} />}
+      <main className={styles.container}>
+        <div className={`${styles.inner} ${styles.background_color_green}`}>
+          <h1 className={styles.title}>まちゃろぐ</h1>
+          {user === null && !waiting && (
+            <CommonButton text="ログイン" onClick={signIn} />
+          )}
+        </div>
+      </main>
     </>
   );
 }

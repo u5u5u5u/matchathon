@@ -1,0 +1,12 @@
+@import "./globals.module.scss";
+
+.background_color_green {
+  background-color: $MainGreen;
+}
+
+.title {
+  font-size: 5rem;
+  letter-spacing: 0.3rem;
+  color: $MainBlack;
+  margin-bottom: 3rem;
+}
