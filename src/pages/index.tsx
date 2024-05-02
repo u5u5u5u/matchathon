@@ -37,7 +37,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.container}>
-        <div className={`${styles.inner} ${styles.background_color_green}`}>
+        <div className={styles.inner}>
           <h1 className={styles.title}>まちゃろぐ</h1>
           {user === null && !waiting && (
             <CommonButton text="ログイン" onClick={signIn} />

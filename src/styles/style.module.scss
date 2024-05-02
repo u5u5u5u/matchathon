@@ -1,6 +1,11 @@
 @import "./globals.module.scss";
 
-.background_color_green {
+.container {
+  @include container();
+}
+
+.inner {
+  @include inner();
   background-color: $MainGreen;
 }
 

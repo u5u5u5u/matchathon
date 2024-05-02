@@ -11,6 +11,7 @@ import BottomBarProfileIcon from "@/components/uiComponents/Buttons/BottomBarIco
 import BottomBarMapIcon from "@/components/uiComponents/Buttons/BottomBarIcons/MapIcon";
 import BottomBarMatchaIcon from "@/components/uiComponents/Buttons/BottomBarIcons/MatchaIcon";
 import CommonButton from "@/components/uiComponents/Buttons/CommonButton";
+import styles from "./style.module.scss";
 
 export default function Top() {
   const [selected, setSelected] = useState("抹茶料理一覧");
@@ -56,26 +57,30 @@ export default function Top() {
   };
 
   return (
-    <>
-      <header></header>
-      <main>
-        {contents[selected]}
-        <CommonButton text={"ログアウト"} onClick={signOut} />
-      </main>
-      <footer>
-        <nav>
-          <Stack direction="row" spacing={5} justifyContent="space-evenly">
-            {Object.entries(contents).map(([name]) => {
-              const flag = !!name.match(selected);
-              return (
-                <div key={name} onClick={(_) => handleNavClick(name)}>
-                  {icons[name]}
-                </div>
-              );
-            })}
-          </Stack>
-        </nav>
-      </footer>
-    </>
+    <div className={styles.container}>
+      <div className={styles.inner}>
+        <header>
+          <h1 className={styles.title}>{selected}</h1>
+        </header>
+        <main>
+          {contents[selected]}
+          <CommonButton text={"ログアウト"} onClick={signOut} />
+        </main>
+        <footer>
+          <nav>
+            <Stack direction="row" spacing={5} justifyContent="space-evenly">
+              {Object.entries(contents).map(([name]) => {
+                const flag = !!name.match(selected);
+                return (
+                  <div key={name} onClick={(_) => handleNavClick(name)}>
+                    {icons[name]}
+                  </div>
+                );
+              })}
+            </Stack>
+          </nav>
+        </footer>
+      </div>
+    </div>
   );
 }
