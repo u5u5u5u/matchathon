@@ -15,7 +15,7 @@ import BackButton from "@/components/uiComponents/Buttons/BackButton";
 import styles from "./style.module.scss";
 
 export default function Top() {
-  const [selected, setSelected] = useState("抹茶料理一覧");
+  const [selected, setSelected] = useState("一覧");
   const handleNavClick = (newValue: string) => {
     setSelected(newValue);
   };
@@ -44,16 +44,16 @@ export default function Top() {
 
   */
   const contents: { [key: string]: JSX.Element } = {
-    抹茶料理一覧: <MatchaDish />,
+    一覧: <MatchaDish />,
     マイページ: <MyPage />,
-    抹茶料理登録: <MatchaDishRegistration />,
+    登録: <MatchaDishRegistration />,
     地図: <Map />,
   };
 
   const icons: { [key: string]: JSX.Element } = {
-    抹茶料理一覧: <BottomBarMatchaIcon />,
+    一覧: <BottomBarMatchaIcon />,
     マイページ: <BottomBarProfileIcon />,
-    抹茶料理登録: <BottomBarAddIcon />,
+    登録: <BottomBarAddIcon />,
     地図: <BottomBarMapIcon />,
   };
 
@@ -61,7 +61,7 @@ export default function Top() {
     <div className={styles.container}>
       <div className={styles.inner}>
         <header>
-          <BackButton />
+          <BackButton className={styles.back_button} />
           <h1 className={styles.title}>{selected}</h1>
         </header>
         <main>
