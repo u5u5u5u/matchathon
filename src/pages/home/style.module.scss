@@ -1,0 +1,27 @@
+@import "../../styles/globals.module.scss";
+
+.container {
+  @include container();
+}
+
+.inner {
+  @include inner(space-between, center);
+  background-color: $MainGrey;
+
+  header {
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    width: 100%;
+    height: 80px;
+    background-color: $MainGreen;
+    color: $MainBlack;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.1rem;
+
+    .title {
+      margin-bottom: 5px;
+    }
+  }
+}
