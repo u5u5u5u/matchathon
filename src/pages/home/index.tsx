@@ -62,10 +62,8 @@ export default function Top() {
           <BackButton className={styles.back_button} />
           <h1 className={styles.title}>{selected}</h1>
         </header>
-        <main>
-          {contents[selected]}
-          <CommonButton text={"ログアウト"} onClick={signOut} />
-        </main>
+        <main>{contents[selected]}</main>
+        <CommonButton text={"ログアウト"} onClick={signOut} />
         <footer>
           <Stack direction="row" spacing={6} justifyContent="space-evenly">
             {Object.entries(contents).map(([name]) => {

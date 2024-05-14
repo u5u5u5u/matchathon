@@ -1,0 +1,71 @@
+.sub_title {
+  text-align: center;
+}
+
+.user_info {
+  margin: 30px 0;
+
+  .user_info_inner {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: start;
+    margin-top: 30px;
+
+    .user_info_text {
+      .user_name {
+        font-size: 1.2rem;
+        font-weight: 700;
+      }
+
+      .user_intro {
+        font-size: 1rem;
+        padding: 5px;
+        margin-top: 10px;
+      }
+    }
+  }
+}
+
+.user_record {
+  margin: 30px 0;
+
+  .posted_number {
+    margin-top: 30px;
+
+    h3 {
+      text-align: center;
+    }
+
+    .numbers {
+      display: flex;
+      justify-content: space-evenly;
+      list-style: none;
+      margin-top: 10px;
+
+      li {
+        flex: 1;
+        text-align: center;
+      }
+    }
+  }
+
+  .matcha_index {
+    margin-top: 30px;
+
+    h3 {
+      text-align: center;
+    }
+
+    .tastes {
+      display: flex;
+      justify-content: space-evenly;
+      list-style: none;
+      margin-top: 10px;
+
+      li {
+        flex: 1;
+        text-align: center;
+      }
+    }
+  }
+}

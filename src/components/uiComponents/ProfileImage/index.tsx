@@ -1,12 +1,25 @@
-type Props = {
-  src: string;
-};
+import Image from "next/image";
+import styles from "./style.module.scss";
 
-const ProfileImage: React.FC<Props> = ({ src }) => {
+interface ProfileImageProps {
+  src: string;
+}
+
+const ProfileImage: React.FC<ProfileImageProps> = ({ src }) => {
   if (src) {
-    return <img src={src} alt="プロフィール画像" />;
+    return (
+      <div className={styles.profile_image}>
+        <Image
+          width={100}
+          height={100}
+          src={src}
+          alt="プロフィール画像"
+          objectFit="cover"
+        />
+      </div>
+    );
   } else {
-    return <div>画像がありません</div>;
+    return <div className={styles.profile_image}>画像がありません</div>;
   }
 };
 
