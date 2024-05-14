@@ -67,22 +67,22 @@ export default function Top() {
           <CommonButton text={"ログアウト"} onClick={signOut} />
         </main>
         <footer>
-          <nav>
-            <Stack direction="row" spacing={6} justifyContent="space-evenly">
-              {Object.entries(contents).map(([name]) => {
-                const flag = !!name.match(selected);
-                return (
-                  <div
-                    key={name}
-                    onClick={(_) => handleNavClick(name)}
-                    className={`${styles.list} ${styles.active}`}
-                  >
-                    {icons[name]}
-                  </div>
-                );
-              })}
-            </Stack>
-          </nav>
+          <Stack direction="row" spacing={6} justifyContent="space-evenly">
+            {Object.entries(contents).map(([name]) => {
+              const flag = !!name.match(selected);
+              return (
+                <div
+                  key={name}
+                  onClick={(_) => handleNavClick(name)}
+                  className={
+                    flag ? `${styles.list} ${styles.active}` : `${styles.list}`
+                  }
+                >
+                  {icons[name]}
+                </div>
+              );
+            })}
+          </Stack>
         </footer>
       </div>
     </div>

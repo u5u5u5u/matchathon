@@ -2,9 +2,15 @@ import React from "react";
 import InvertColorsOutlinedIcon from "@mui/icons-material/InvertColorsOutlined";
 import styles from "../styles/BottomNavIcons.module.scss";
 
-const BottomBarMatchaIcon: React.FC = () => {
+interface BottomBarMatchaIconProps {
+  className?: string;
+}
+
+const BottomBarMatchaIcon: React.FC<BottomBarMatchaIconProps> = ({
+  className,
+}) => {
   return (
-    <div className={styles.icon}>
+    <div className={`${styles.icon} ${className}`}>
       <InvertColorsOutlinedIcon sx={{ fontSize: 40 }} />
     </div>
   );
