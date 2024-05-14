@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { logout } from "../../lib/auth";
 import Stack from "@mui/material/Stack";
@@ -33,7 +33,6 @@ export default function Top() {
       });
   };
   /*
-
 ホームページ(home)
 ├─抹茶料理一覧ページ(MatchaDish)
 ├─マイページ(MyPage)
@@ -41,7 +40,6 @@ export default function Top() {
 ├─抹茶料理登録ページ(MatchaDishRegistration)
 ├─地図(Map)
 └─()
-
   */
   const contents: { [key: string]: JSX.Element } = {
     一覧: <MatchaDish />,
@@ -69,18 +67,22 @@ export default function Top() {
           <CommonButton text={"ログアウト"} onClick={signOut} />
         </main>
         <footer>
-          <nav>
-            <Stack direction="row" spacing={5} justifyContent="space-evenly">
-              {Object.entries(contents).map(([name]) => {
-                const flag = !!name.match(selected);
-                return (
-                  <div key={name} onClick={(_) => handleNavClick(name)}>
-                    {icons[name]}
-                  </div>
-                );
-              })}
-            </Stack>
-          </nav>
+          <Stack direction="row" spacing={6} justifyContent="space-evenly">
+            {Object.entries(contents).map(([name]) => {
+              const flag = !!name.match(selected);
+              return (
+                <div
+                  key={name}
+                  onClick={(_) => handleNavClick(name)}
+                  className={
+                    flag ? `${styles.list} ${styles.active}` : `${styles.list}`
+                  }
+                >
+                  {icons[name]}
+                </div>
+              );
+            })}
+          </Stack>
         </footer>
       </div>
     </div>
