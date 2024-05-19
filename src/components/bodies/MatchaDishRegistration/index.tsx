@@ -18,8 +18,8 @@ const MatchaDishRegistration: React.FC = () => {
   const [matchaBitterness, setMatchaBitterness] = useState<number>(5); //苦味
   const [matchaSweetness, setMatchaSweetness] = useState<number>(5); //甘味
   const [matchaThickness, setMatchaThickness] = useState<number>(5); //濃さ
-  const user = auth.currentUser;
-  const userId = user?.uid;
+  const user = auth.currentUser; //ユーザー情報
+  const userId = user?.uid; //ユーザーID
 
   //登録処理
   const registerMatchaDish = async () => {
