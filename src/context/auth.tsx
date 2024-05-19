@@ -1,5 +1,5 @@
 import { auth, db } from "@/lib/firebase";
-import { User } from "@/types/user";
+import { User } from "@/utils/types";
 import { doc, getDoc, setDoc } from "@firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import {

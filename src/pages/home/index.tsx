@@ -71,7 +71,7 @@ export default function Top() {
               return (
                 <div
                   key={name}
-                  onClick={(_) => handleNavClick(name)}
+                  onClick={() => handleNavClick(name)}
                   className={
                     flag ? `${styles.list} ${styles.active}` : `${styles.list}`
                   }
