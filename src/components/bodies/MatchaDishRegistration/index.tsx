@@ -77,7 +77,7 @@ const MatchaDishRegistration: React.FC = () => {
             type="date"
             id="matchaDate"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setMatchaGenre(e.target.value)
+              setMatchaDate(e.target.value)
             }
             required
           />
@@ -90,7 +90,7 @@ const MatchaDishRegistration: React.FC = () => {
             min={0}
             max={10}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setMatchaGenre(e.target.value)
+              setMatchaBitterness(Number(e.target.value))
             }
           />
         </div>
@@ -102,7 +102,7 @@ const MatchaDishRegistration: React.FC = () => {
             min={0}
             max={10}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setMatchaGenre(e.target.value)
+              setMatchaSweetness(Number(e.target.value))
             }
           />
         </div>
@@ -114,7 +114,7 @@ const MatchaDishRegistration: React.FC = () => {
             min={0}
             max={10}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setMatchaGenre(e.target.value)
+              setMatchaThickness(Number(e.target.value))
             }
           />
         </div>
