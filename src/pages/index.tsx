@@ -5,6 +5,9 @@ import { useState } from "react";
 import { useRouter } from "next/router"; // Next.js のルーターをインポート
 import CommonButton from "@/components/uiComponents/Buttons/CommonButton";
 import styles from "@/styles/style.module.scss";
+import firebase from "firebase/compat/app";
+import { auth, db } from "@/lib/firebase";
+import { collection, doc, getDoc, setDoc } from "firebase/firestore"; // Import the necessary Firestore methods
 
 export default function Home() {
   const user = useAuth();
@@ -16,9 +19,20 @@ export default function Home() {
 
     login()
       .then(() => {
-        // ログイン成功時に/homeにリダイレクト
+        // Firestoreにユーザーのドキュメントが存在しない場合は、ドキュメントを作成
+        auth.onAuthStateChanged(async (user) => {
+          if (user) {
+            var userDoc = await getDoc(doc(collection(db, "users"), user.uid));
+            if (!userDoc.exists) {
+              await setDoc(userDoc.ref, {
+                screen_name: user.uid,
+                display_name: "名無しさん",
+                created_at: firebase.firestore.FieldValue.serverTimestamp(),
+              });
+            }
+          }
+        });
         router.push("/home");
-        console.log("ログイン成功");
       })
       .catch((error) => {
         console.error(error?.code);
