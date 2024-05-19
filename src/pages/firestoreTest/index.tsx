@@ -100,6 +100,7 @@ export default function Home() {
   const [email, setEmail] = useState<string>("");
   const [message, setMessage] = useState<string>("");
 
+  // フォームの送信処理
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!name || !email || !message) return;
@@ -111,6 +112,7 @@ export default function Home() {
     }
   };
 
+  // データの更新処理
   const updateData = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const updated = await updateDataInFirestore(
@@ -129,6 +131,7 @@ export default function Home() {
     }
   };
 
+  // データの削除処理
   const deleteData = async () => {
     const deleted = await deleteDataFromFirestore("CwOJRzcnGgnso0QT4auU");
     if (deleted) {
@@ -136,14 +139,17 @@ export default function Home() {
     }
   };
 
+  // データの取得処理
   const getDataOnly = async () => {
     await getDataOnlyFromFirestore();
   };
 
+  // データの取得処理
   const getDataAll = async () => {
     await getAllDataFromFirestore();
   };
 
+  // データの取得処理
   const getDataOrderBy = async () => {
     await getDataOrderByFromFirestore();
   };

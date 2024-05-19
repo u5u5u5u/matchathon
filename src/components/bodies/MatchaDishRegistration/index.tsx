@@ -1,4 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { auth, db } from "@/lib/firebase";
+import { addDoc, collection } from "firebase/firestore";
+import { useRouter } from "next/router";
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
 
 const MatchaDishRegistration: React.FC = () => {
   //変数定義
@@ -32,6 +38,7 @@ const MatchaDishRegistration: React.FC = () => {
           <input
             type="text"
             id="matchaName"
+            value={matchaName}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setMatchaName(e.target.value)
             }
@@ -43,6 +50,7 @@ const MatchaDishRegistration: React.FC = () => {
           <input
             type="text"
             id="matchaShop"
+            value={matchaShop}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setMatchaShop(e.target.value)
             }
@@ -54,6 +62,7 @@ const MatchaDishRegistration: React.FC = () => {
           <input
             type="text"
             id="matchaAddress"
+            value={matchaAddress}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setMatchaAddress(e.target.value)
             }
@@ -65,6 +74,7 @@ const MatchaDishRegistration: React.FC = () => {
           <input
             type="text"
             id="matchaGenre"
+            value={matchaGenre}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setMatchaGenre(e.target.value)
             }
@@ -76,6 +86,7 @@ const MatchaDishRegistration: React.FC = () => {
           <input
             type="date"
             id="matchaDate"
+            value={matchaDate}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setMatchaDate(e.target.value)
             }
@@ -87,6 +98,7 @@ const MatchaDishRegistration: React.FC = () => {
           <input
             type="range"
             id="matchaBitterness"
+            value={matchaBitterness}
             min={0}
             max={10}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -99,6 +111,7 @@ const MatchaDishRegistration: React.FC = () => {
           <input
             type="range"
             id="matchaSweetness"
+            value={matchaSweetness}
             min={0}
             max={10}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -111,6 +124,7 @@ const MatchaDishRegistration: React.FC = () => {
           <input
             type="range"
             id="matchaThickness"
+            value={matchaThickness}
             min={0}
             max={10}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
