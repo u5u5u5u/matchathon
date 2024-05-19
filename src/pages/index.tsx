@@ -19,12 +19,11 @@ export default function Home() {
 
     login()
       .then(() => {
-        // データベースにユーザーのドキュメントが存在しない場合は、ドキュメントを作成
+        // Firestoreにユーザーのドキュメントが存在しない場合は、ドキュメントを作成
         auth.onAuthStateChanged(async (user) => {
           if (user) {
             var userDoc = await getDoc(doc(collection(db, "users"), user.uid));
             if (!userDoc.exists) {
-              // Firestore にユーザー用のドキュメントが作られていなければ作る
               await setDoc(userDoc.ref, {
                 screen_name: user.uid,
                 display_name: "名無しさん",
