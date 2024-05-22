@@ -1,9 +1,11 @@
 import React from "react";
+import Image from "next/image";
 import { db } from "@/lib/firebase";
 import { getDocs, collection } from "firebase/firestore";
 import { auth } from "@/lib/firebase";
 import { useState, useEffect } from "react";
 import type { MatchaDish } from "@/utils/types";
+import styles from "./style.module.scss";
 
 const MatchaDishes: React.FC = () => {
   const user = auth.currentUser;
@@ -42,14 +44,19 @@ const MatchaDishes: React.FC = () => {
       <div>
         {matchaDishes.map((matchaDish, index) => (
           <div key={index}>
-            <p>料理名：{matchaDish.matchaName}</p>
-            <p>店舗名：{matchaDish.matchaShop}</p>
-            <p>住所：{matchaDish.matchaAddress}</p>
-            <p>ジャンル：{matchaDish.matchaGenre}</p>
-            <p>日付：{matchaDish.matchaDate}</p>
-            <p>苦味：{matchaDish.matchaBitterness}</p>
-            <p>甘味：{matchaDish.matchaSweetness}</p>
-            <p>濃さ：{matchaDish.matchaThickness}</p>
+            <div>
+              <Image src={""} alt="抹茶料理の画像" />
+            </div>
+            <div className={styles.matcha_info}>
+              <p>料理名：{matchaDish.matchaName}</p>
+              <p>店舗名：{matchaDish.matchaShop}</p>
+              <p>住所：{matchaDish.matchaAddress}</p>
+              <p>ジャンル：{matchaDish.matchaGenre}</p>
+              <p>日付：{matchaDish.matchaDate}</p>
+              <p>苦味：{matchaDish.matchaBitterness}</p>
+              <p>甘味：{matchaDish.matchaSweetness}</p>
+              <p>濃さ：{matchaDish.matchaThickness}</p>
+            </div>
           </div>
         ))}
       </div>
