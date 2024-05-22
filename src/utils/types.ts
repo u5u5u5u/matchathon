@@ -4,15 +4,14 @@ export interface User {
 }
 
 export interface MatchaDish {
-  id: string;
-  name: string;
-  shop: string;
-  address: string;
-  genre: string;
-  date: string;
-  bitterness: number;
-  sweetness: number;
-  thickness: number;
+  matchaName: string;
+  matchaShop: string;
+  matchaAddress: string;
+  matchaGenre: string;
+  matchaDate: string;
+  matchaBitterness: number;
+  matchaSweetness: number;
+  matchaThickness: number;
 }
 
 export interface MatchaProps {

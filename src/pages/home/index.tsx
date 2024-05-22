@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { logout } from "../../lib/auth";
 import Stack from "@mui/material/Stack";
-import MatchaDish from "@/components/bodies/MatchaDish";
+import MatchaDishes from "@/components/bodies/MatchaDish";
 import MyPage from "@/components/bodies/MyPage";
 import MatchaDishRegistration from "@/components/bodies/MatchaDishRegistration";
 import Map from "@/components/bodies/Map";
@@ -42,7 +42,7 @@ export default function Top() {
 └─()
   */
   const contents: { [key: string]: JSX.Element } = {
-    一覧: <MatchaDish />,
+    一覧: <MatchaDishes />,
     マイページ: <MyPage />,
     登録: <MatchaDishRegistration />,
     地図: <Map />,
